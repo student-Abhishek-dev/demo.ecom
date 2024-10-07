@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <a href="/products">Home</a> |
+    <a href="/add-product">Add Product</a> |
+    <a href="/login">Login</a> |
+    <a href="/signup">Signup</a>
+</nav>
+
+<h1>User Authentication</h1>
+
+<!-- Success Messages -->
+<div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+
+<h2>Login</h2>
+<form action="#" th:action="@{/login}" method="post">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Login</button>
+</form>
+
+<h2>Signup</h2>
+<form action="#" th:action="@{/signup}" th:object="${user}" method="post">
+    <label for="signupUsername">Username</label>
+    <input type="text" id="signupUsername" th:field="*{username}" placeholder="Username" required />
+
+    <label for="signupPassword">Password</label>
+    <input type="password" id="signupPassword" th:field="*{password}" placeholder="Password" required />
+
+    <button type="submit">Signup</button>
+</form>
+
+<h1>Add a Product</h1>
+<form th:action="@{/add-product}" th:object="${product}" method="post">
+    <label for="name">Product Name</label>
+    <input type="text" id="name" th:field="*{name}" required>
+
+    <label for="price">Price</label>
+    <input type="number" id="price" th:field="*{price}" required>
+
+    <label for="description">Description</label>
+    <input type="text" id="description" th:field="*{description}" required>
+
+    <button type="submit">Add Product</button>
+</form>
+
+<h1>Product List</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}">Product Name</td>
+        <td th:text="${product.price}">Product Price</td>
+        <td th:text="${product.description}">Product Description</td>
+    </tr>
+</table>
+
+<a href="/add-product">Add New Product</a>
+</body>
+</html>
